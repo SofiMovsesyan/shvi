@@ -61,21 +61,19 @@ async function encodeWAV(
 
 const atom = (name) => Symbol.for(name);
 
-
 const tokenize = (input) => {
   if (input.trim() === "") {
     return [];
   }
   const tokens = input.split(" ");
-  
+
   return tokens.map((token) => {
     const num = parseFloat(token);
-    
+
     if (!isNaN(num)) {
       return num;
     }
-    
+
     return atom(token);
   });
 };
-
