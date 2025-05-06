@@ -1,4 +1,4 @@
-export { encodeWAV, generatePCM };
+export { encodeWAV, generatePCM, tokenize };
 
 // sample[n]= A ⋅ sin(2 * π * f * (n / R)​)
 
@@ -9,7 +9,7 @@ export { encodeWAV, generatePCM };
 //   n: Sample number (integer), from 0 to R × duration − 1
 
 function generatePCM(frequency, duration) {
-  duration = duration / 1000
+  duration = duration / 1000;
   const sample = [];
   const Amplitude = 32767;
   const R = 44100; // samples per second
@@ -58,3 +58,7 @@ async function encodeWAV(
     new Uint8Array(buffer),
   );
 }
+
+const tokenize = (input) => {
+  throw new Error("Not implemented");
+};
