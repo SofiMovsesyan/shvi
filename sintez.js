@@ -1,4 +1,4 @@
-export { encodeWAV, generatePCM, tokenize, typeify };
+export { encodeWAV, evaluate, generatePCM, tokenize, typeify };
 
 // sample[n]= A ⋅ sin(2 * π * f * (n / R)​)
 
@@ -62,8 +62,7 @@ async function encodeWAV(
 const atom = (name) => Symbol.for(name);
 
 const typeify = (token) => {
-  const number = Number.parseFloat(token, 10);
-  return Number.isNaN(number) ? atom(token) : number;
+  throw new Error("Not implemented");
 };
 
 const tokenize = (input) => {
@@ -72,23 +71,17 @@ const tokenize = (input) => {
   }
   const tokens = input.split(" ");
 
-  return tokens.map((token) => {
-    const num = parseFloat(token);
+  const loop = (
+    progressiveScope,
+    [graphemeAtHand, ...restOfGraphemes],
+    tokenSoFar = "",
+  ) => {
+    throw new Error("Not implemented");
+  };
 
-    if (!isNaN(num)) {
-      return num;
-    }
-
-    return atom(token);
-  });
+  return loop([[]], graphemes);
 };
 
-const run = (
-  program,
-  definitions = [],
-) => {
-  const tokens = tokenize(program);
-  const value = evaluate(tokens, definitions);
-
-  return value;
+const evaluate = (expression) => {
+  throw new Error("Not implemented");
 };
