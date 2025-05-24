@@ -62,25 +62,63 @@ async function encodeWAV(
 const atom = (name) => Symbol.for(name);
 
 const typeify = (token) => {
-  throw new Error("Not implemented");
+  if (token === "") {
+    return null; 
+  }
+  if (!isNaN(token)) {
+    return parseFloat(token);
+  }
+  return atom(token);
 };
-
 const tokenize = (input) => {
   if (input.trim() === "") {
     return [];
   }
-  const tokens = input.split(" ");
-
+  const graphemes = Array.from(input)
   const loop = (
     progressiveScope,
     [graphemeAtHand, ...restOfGraphemes],
     tokenSoFar = "",
   ) => {
-    throw new Error("Not implemented");
+    if (graphemeAtHand === undefined) {
+      if (tokenSoFar.length > 0) {
+        progressiveScope[0].push(typeify(tokenSoFar));
+      }
+      return progressiveScope[0]; 
+    }
+    const newScopes = []
+    switch (true) {
+        case graphemeAtHand === ' ':
+          if (tokenSoFar.length > 0) {
+            progressiveScope[0].push(typeify(tokenSoFar));
+          }
+          return loop(progressiveScope, restOfGraphemes, "");
+        
+        case graphemeAtHand === '(':
+          if (tokenSoFar.length > 0) {
+              progressiveScope[0].push(typeify(tokenSoFar));
+          }
+          progressiveScope[0].push(newScopes)
+          return loop([newScopes, ...progressiveScope], restOfGraphemes, "")
+          
+
+        case graphemeAtHand === ')':
+          if (tokenSoFar.length > 0) {
+            progressiveScope[0].push(typeify(tokenSoFar));
+          }
+          return loop(progressiveScope.slice(1), restOfGraphemes, "");
+
+        default:
+          return loop(progressiveScope, restOfGraphemes, tokenSoFar + graphemeAtHand);
+      
+    }
   };
 
   return loop([[]], graphemes);
 };
+
+
+
 
 const evaluate = (expression) => {
   throw new Error("Not implemented");
